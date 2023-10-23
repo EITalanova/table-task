@@ -1,19 +1,28 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchTableData } from './tableThunks';
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchTableData, updateLine } from "./tableThunks";
 
 const initialState = {
+  limit: 10,
   totalPages: null,
-  currentPage: 0,
+  currentPage: 1,
   tableData: [],
   isLoading: false,
   error: null,
+  isEditMode: false,
 };
 
 const tableSlice = createSlice({
-  name: 'tableData',
+  name: "tableData",
   initialState,
-  reducers: {},
-  extraReducers: builder =>
+  reducers: {
+    increasePage: (state) => {
+      state.page += 1;
+    },
+    setIsEditMode: (state, { payload }) => {
+      state.isEditMode = payload;
+    },
+  },
+  extraReducers: (builder) =>
     builder
       .addCase(fetchTableData.pending, (state, { payload }) => {
         state.isLoading = true;
@@ -24,7 +33,28 @@ const tableSlice = createSlice({
       })
       .addCase(fetchTableData.rejected, (state, { payload }) => {
         state.isLoading = false;
+      })
+      .addCase(updateLine.pending, (state, { payload }) => {
+        state.isLoading = true;
+      })
+      .addCase(updateLine.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+
+        const updatedLineIndex = state.tableData.findIndex(
+          (line) => line.id === payload.id
+        );
+        if (updatedLineIndex !== -1) {
+          state.notes[updatedLineIndex] = payload;
+          // if (state.currentNote && state.currentNote.id === payload.id) {
+          //   state.currentNote = payload;
+          // }
+        }
+      })
+      .addCase(updateLine.rejected, (state, { payload }) => {
+        state.isLoading = false;
       }),
 });
 
 export const tableReducer = tableSlice.reducer;
+export const { increasePage } = tableSlice.actions;

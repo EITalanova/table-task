@@ -1,5 +1,5 @@
 .table {
-  width: 85%; 
+  width: 85%;
   border-collapse: collapse;
   margin: 0 auto;
   border-radius: 25px;
@@ -16,21 +16,37 @@
 }
 
 .table th {
-  background-color: var(--bcgGreen);
-  color: var(--btnWhite);
-}
-
-.table tbody tr:nth-child(even) {
   background-color: var(--accentGreen);
   color: var(--btnWhite);
 }
 
-.table tbody tr:nth-child(odd) {
-  background-color: var(--bcgGreen);
+.table tbody tr:nth-child(even),
+table tbody tr:nth-child(even) td input {
+  background-color: var(--accentGreen);
   color: var(--btnWhite);
 }
 
-.table button {
+.table tbody tr:nth-child(even) td button svg {
+  fill: var(--btnWhite);
+
+}
+
+.table tbody tr:nth-child(odd),
+.table tbody tr:nth-child(odd) td input {
+  background-color: var(--bcgGreen);
+  color: var(--accentGreen);
+}
+
+.table tbody tr:nth-child(odd) td button svg {
+  fill: var(--accentGreen);
+  
+}
+
+td input {
+  border: none;
+}
+
+/* .table button {
   font-size: 10px;
   background-color: var(--accentGreen);
   color: var(--btnWhite);
@@ -39,6 +55,11 @@
   border-radius: 10px;
   cursor: pointer;
   margin: 3px;
+} */
+
+button svg {
+  stroke:var(--accentGreen);
+
 }
 
 .table-edit-buttons {

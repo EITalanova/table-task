@@ -14,6 +14,12 @@ import storage from "redux-persist/lib/storage";
 
 
 import { tableReducer } from "./table/tableSlice";
+import { loginReducer } from "./login/loginSlice";
+
+const loginPersistConfig = {
+  key: "login",
+  storage,
+};
 
 const tablePersistConfig = {
   key: "table",
@@ -31,6 +37,7 @@ const middleware = [
 export const store = configureStore({
   reducer: {
     table: persistReducer(tablePersistConfig, tableReducer),
+    login: persistReducer(loginPersistConfig, loginReducer),
   },
   middleware,
 });

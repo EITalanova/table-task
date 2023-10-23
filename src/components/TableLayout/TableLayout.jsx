@@ -1,33 +1,60 @@
 import React, { useEffect, useState } from "react";
-
-import ReactPaginate from "react-paginate";
-import { selectCurrentPage, selectTotalPages } from '../../redux/table/tableSelector';
-
 import { useDispatch, useSelector } from "react-redux";
 import { selectTableData } from "../../redux/table/tableSelector";
-
 import { fetchTableData } from "../../redux/table/tableThunks";
+import { updateLine } from "../../redux/table/tableThunks";
 
-import { Pagination } from "../Pagination/Pagination";
+import { ReactComponent as EditIcon } from "../../assets/svg/table/edit.svg";
+import { ReactComponent as SaveIcon } from "../../assets/svg/table/save.svg";
+
 
 import style from "./TableLayout.module.css";
 
-
 export const TableLayout = () => {
-const table = useSelector(selectTableData);
+  const [editMode, setEditMode] = useState({});
+  const [editedData, setEditedData] = useState({});
+
+  const table = useSelector(selectTableData);
   const dispatch = useDispatch();
 
-  const totalPages = useSelector(selectTotalPages); // Додаємо селектор для totalPages
-  const currentPage = useSelector(selectCurrentPage); 
-
-  
-
-
-dispatch(fetchTableData({ page: currentPage, limit: 10 }));
   useEffect(() => {
-    dispatch(fetchTableData());
+    dispatch(fetchTableData(30));
   }, [dispatch]);
 
+  const handleEditClick = (id) => {
+    setEditMode((prevMode) => ({
+      ...prevMode,
+      [id]: true,
+    }));
+  };
+
+  const handleSaveClick = (id) => {
+    setEditMode((prevMode) => ({
+      ...prevMode,
+      [id]: false,
+    }));
+  };
+
+  const handleInputChange = (id, name, value) => {
+    setEditedData((prevData) => ({
+      ...prevData,
+      [name]: { ...prevData[name], [id]: value },
+    }));
+  };
+
+  const handleSaveLine = (id) => {
+    // Получите данные из editedData для обновления
+    const updatedData = {
+      id: id,
+      ...table.results.find((item) => item.id === id),
+      ...Object.keys(editedData).reduce((acc, name) => {
+        acc[name] = editedData[name][id] || table.results.find((item) => item.id === id)[name];
+        return acc;
+      }, {}),
+    };
+
+    dispatch(updateLine(updatedData));
+  };
 
   return (
     <>
@@ -43,25 +70,40 @@ dispatch(fetchTableData({ page: currentPage, limit: 10 }));
           </tr>
         </thead>
         <tbody>
-          {table.results.map((item) => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.name}</td>
-              <td>{item.email}</td>
-              <td>{item.birthday_date}</td>
-              <td>{item.phone_number}</td>
-              <td>{item.address}</td>
-              <td>
-                <button>Edit</button>
-                <button>Save</button>
-              </td>
-            </tr>
-          ))}
+          {table &&
+            table.results &&
+            table.results.map((item) => (
+              <tr key={item.id}>
+                {/* <td>{item.id}</td> */}
+                {Object.keys(item).map((name) => (
+                  <td key={name}>
+                    {editMode[item.id] ? (
+                      <input
+                        type="text"
+                        value={editedData[name]?.[item.id] || item[name]}
+                        onChange={(e) => handleInputChange(item.id, name, e.target.value)}
+                      />
+                    ) : (
+                      editedData[name]?.[item.id] || item[name]
+                    )}
+                  </td>
+                ))}
+                <td>
+                  {editMode[item.id] ? (
+                    <button onClick={() => handleSaveLine(item.id)}>
+                      <SaveIcon />
+                    </button>
+                  ) : (
+                      <button onClick={() => handleEditClick(item.id)}>
+                        
+                        <EditIcon/ >
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
-
-      <Pagination totalPages={totalPages} currentPage={currentPage} /> {/* Передаємо totalPages та currentPage у компонент Pagination */}
-
     </>
   );
 };
