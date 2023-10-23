@@ -1,8 +1,5 @@
 .logFormContainer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+margin: 25px auto;
 
   display: flex;
   flex-direction: column;
@@ -80,6 +77,12 @@
   line-height: calc(24 / 16);
   background-color: var(--accentGreen);
   color: var(--btnWhite);
+  transition: all 0.3s ease;
+}
+
+.logFormLinkBtn:hover {
+  font-size: 17px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 .logFormLink {

@@ -12,12 +12,12 @@ import { persistor } from "./redux/store";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    // <PersistGate loading={null} persistor={persistor}>
+    <PersistGate loading={null} persistor={persistor}>
       <BrowserRouter basename="/table-task">
       <React.StrictMode>
         <App />
         </React.StrictMode>
         </BrowserRouter>
-   //</PersistGate>
-  //</Provider> 
+   </PersistGate>
+  </Provider> 
 );

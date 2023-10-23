@@ -28,7 +28,6 @@ table tbody tr:nth-child(even) td input {
 
 .table tbody tr:nth-child(even) td button svg {
   fill: var(--btnWhite);
-
 }
 
 .table tbody tr:nth-child(odd),
@@ -39,11 +38,12 @@ table tbody tr:nth-child(even) td input {
 
 .table tbody tr:nth-child(odd) td button svg {
   fill: var(--accentGreen);
-  
 }
 
 td input {
   border: none;
+  font-size: 11px;
+  width: 100%;
 }
 
 /* .table button {
@@ -58,8 +58,7 @@ td input {
 } */
 
 button svg {
-  stroke:var(--accentGreen);
-
+  stroke: var(--accentGreen);
 }
 
 .table-edit-buttons {

@@ -1,4 +1,5 @@
 import { LoginForm } from "../../components/LoginForm/LoginForm";
+import { motion } from 'framer-motion';
 
 import style from "./Login.module.css";
 

@@ -4,6 +4,7 @@ import { LoginSchema } from "../../utils/yup";
 import { loginUser } from "../../redux/login/loginSlice";
 import { Navigate } from "react-router-dom";
 import Notiflix from "notiflix";
+import { motion } from "framer-motion";
 
 import { ReactComponent as ErrorIcon } from "../../assets/svg/login/validationError.svg";
 import { ReactComponent as SuccessIcon } from "../../assets/svg/login/validationSuccess.svg";
@@ -60,23 +61,35 @@ export const LoginForm = () => {
   };
 
   useEffect(() => {
-   console.log('first')
+    console.log("first");
     if (user) {
-       return <Navigate to="/table" />;
+      return <Navigate to="/table" />;
     }
   }, [user]);
 
   useEffect(() => {
     if (error) {
-    
       Notiflix.Notify.failure("Login or password does not exist 🥲 Try again");
     }
   }, [error]);
 
-
   return (
     <>
-      <div className={style.logFormContainer}>
+      <motion.div
+        className={style.logFormContainer}
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          duration: 0.3,
+          ease: [0, 0.71, 0.2, 1.01],
+          scale: {
+            type: "spring",
+            damping: 9,
+            stiffness: 100,
+            restDelta: 0.001,
+          },
+        }}
+      >
         <div className={style.logFormTextBox}>
           <h1 className={style.logFormTitle}>Login</h1>
           <p className={style.logFormDiscr}>
@@ -84,10 +97,10 @@ export const LoginForm = () => {
           </p>
         </div>
 
-           <Formik
+        <Formik
           validationSchema={LoginSchema}
           initialValues={{ name: "", password: "" }}
-           onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
         >
           <Form className={style.logFormBox} noValidate>
             <InputField type="text" name="login" placeholder="Login" />
@@ -96,7 +109,12 @@ export const LoginForm = () => {
               name="password"
               placeholder="Password"
             />
-            <button className={style.logFormEye} onClick={changePasswordVisibility}>
+
+            
+            <button
+              className={style.logFormEye}
+              onClick={changePasswordVisibility}
+            >
               {passwordVisibility ? <VisibleIcon /> : <InvisibleIcon />}
             </button>
             {error && (
@@ -105,12 +123,13 @@ export const LoginForm = () => {
                 <span>{error}</span>
               </div>
             )}
+            
             <button className={style.logFormLinkBtn} type="submit">
               Login
             </button>
           </Form>
         </Formik>
-      </div>
+      </motion.div>
     </>
   );
 };
