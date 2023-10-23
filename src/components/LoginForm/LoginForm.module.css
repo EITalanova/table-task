@@ -1,0 +1,122 @@
+.logFormContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  height: auto;
+  gap: 26px;
+  align-items: center;
+  padding: 35px 20px;
+
+  border-radius: 25px;
+  background-color: var(--bcgGreen);
+}
+
+.logFormTextBox {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.logFormTitle {
+  font-size: 30px;
+  font-weight: 600;
+  line-height: calc(32 / 30);
+  letter-spacing: -0.6px;
+}
+
+.logFormDiscr {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: calc(24 / 16);
+  color: var(--mainGrey);
+}
+
+.logFormBox {
+  display: flex;
+  position: relative;
+
+
+  width: 100%;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.logFormField {
+  position: relative;
+  font-size: 16px;
+
+  font-weight: 400;
+  line-height: calc(24 / 16);
+  padding: 16px 18px;
+
+  background-color: transparent;
+  border-radius: 15px;
+  border: 1px solid rgba(18, 20, 23, 0.1);
+}
+
+.logFormEye {
+    position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translate(-50%, -50%);
+}
+
+.logFormLinkBtn {
+  padding: 16px;
+  border-radius: 30px;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: calc(24 / 16);
+  background-color: var(--accentGreen);
+  color: var(--btnWhite);
+}
+
+.logFormLink {
+  color: rgba(18, 20, 23, 0.5);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: calc(24 / 16);
+}
+
+.messageError {
+  position: absolute;
+  bottom: -18px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: calc(18 / 12);
+  letter-spacing: 0.12px;
+  color: #d80027;
+}
+
+.messageSuccess {
+  display: flex;
+  position: absolute;
+  bottom: -18px;
+  gap: 4px;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: calc(18 / 12);
+  letter-spacing: 0.12px;
+  color: rgba(60, 191, 97, 1);
+}
+
+.log {
+  position: relative;
+  /* background-color: red;
+  width: 10px; */
+}

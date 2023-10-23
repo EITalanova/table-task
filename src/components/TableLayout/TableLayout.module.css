@@ -1,0 +1,47 @@
+.table {
+  width: 85%; 
+  border-collapse: collapse;
+  margin: 0 auto;
+  border-radius: 25px;
+  background-color: var(--bcgGreen);
+  overflow: hidden;
+
+  font-size: 11px;
+}
+
+.table th,
+.table td {
+  padding: 5px;
+  border: 1px solid rgba(18, 20, 23, 0.1);
+}
+
+.table th {
+  background-color: var(--bcgGreen);
+  color: var(--btnWhite);
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: var(--accentGreen);
+  color: var(--btnWhite);
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: var(--bcgGreen);
+  color: var(--btnWhite);
+}
+
+.table button {
+  font-size: 10px;
+  background-color: var(--accentGreen);
+  color: var(--btnWhite);
+  padding: 3px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 3px;
+}
+
+.table-edit-buttons {
+  display: flex;
+  justify-content: center;
+}
