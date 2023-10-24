@@ -10,6 +10,9 @@ import { selectOffset } from "../../redux/table/tableSelector";
 import { Formik, Field, Form, useFormikContext } from "formik";
 import { TableSchema, LoginSchema } from "../../utils/yup";
 
+import { Sorting } from "../Sorting/Sorting";
+import { TableRow } from "../TableRow/TableRow";
+
 import { ReactComponent as EditIcon } from "../../assets/svg/table/edit.svg";
 import { ReactComponent as SaveIcon } from "../../assets/svg/table/save.svg";
 import { ReactComponent as TopIcon } from "../../assets/svg/table/top.svg";
@@ -17,28 +20,25 @@ import { ReactComponent as BottomIcon } from "../../assets/svg/table/bottom.svg"
 
 import style from "./TableLayout.module.css";
 
-const InputField = ({ name, value, onChange }) => {
-  const { errors, touched } = useFormikContext();
-  const error = touched[name] && errors[name];
+// const InputField = ({ name, value, onChange }) => {
+//   const { errors, touched } = useFormikContext();
+//   const error = touched[name] && errors[name];
 
-  return (
-    <>
-      <Field
-        className={style.logFormField}
-        type="text"
-        name={name}
-        value={value}
-        onChange={onChange}
-      />
-      {touched[name] && error && (
-        <div className={style.messageError}>
-          {/* <ErrorIcon /> */}
-          <span>{error}</span>
-        </div>
-      )}
-    </>
-  );
-};
+//   return (
+//     <>
+//       <Field
+//         className={style.logFormField}
+//         type="text"
+//         name={name}
+//         value={value}
+//         onChange={onChange}
+//       />
+//       {touched[name] && error && (
+//           <span>{error}</span>
+//       )}
+//     </>
+//   );
+// };
 
 export const TableLayout = () => {
   const [sortBy, setSortBy] = useState(""); // Имя столбца для сортировки
@@ -78,21 +78,24 @@ export const TableLayout = () => {
 
   useEffect(() => {
     dispatch(fetchTableData(offset));
-  }, [dispatch]);
+  }, [offset]);
+  console.log(table);
 
   const handleEditClick = (id) => {
-    setEditMode((prevMode) => ({
-      ...prevMode,
-      [id]: true,
-    }));
+    setEditMode((prevMode) => {
+      return {
+        ...prevMode,
+        [id]: !prevMode[id],
+      };
+    });
   };
 
-  const handleSaveClick = (id) => {
-    setEditMode((prevMode) => ({
-      ...prevMode,
-      [id]: false,
-    }));
-  };
+  // const handleSaveClick = (id) => {
+  //   setEditMode((prevMode) => ({
+  //     ...prevMode,
+  //     [id]: false,
+  //   }));
+  // };
 
   const handleInputChange = (id, name, value) => {
     setEditedData((prevData) => ({
@@ -114,6 +117,11 @@ export const TableLayout = () => {
     };
 
     dispatch(updateLine(updatedData));
+
+    setEditMode((prevMode) => ({
+      ...prevMode,
+      [id]: false,
+    }));
   };
 
   const columns = [
@@ -139,7 +147,12 @@ export const TableLayout = () => {
         onSubmit={() => console.log("first")}
       >
         <table className={style.table}>
-          <thead>
+
+          
+                    <Sorting columns={columns} sortBy={sortBy} sortOrder={sortOrder} handleSort={handleSort} />
+
+
+          {/* <thead>
             {columns.map((column) => (
               <th
                 key={column.key}
@@ -154,12 +167,25 @@ export const TableLayout = () => {
                 )}
               </th>
             ))}
-          </thead>
+          </thead> */}
           <tbody>
             {table &&
               table.results &&
               sortTableData().map((item) => (
-                <tr key={item.id}>
+
+
+                 <TableRow
+                  key={item.id}
+                  item={item}
+                  editMode={editMode}
+                  editedData={editedData}
+                  handleEditClick={handleEditClick}
+                  handleInputChange={handleInputChange}
+                  handleSaveLine={handleSaveLine}
+                />
+              ))}
+
+                {/* <tr key={item.id}>
                   {Object.keys(item).map((name) => (
                     <td key={name}>
                       {editMode[item.id] ? (
@@ -207,8 +233,8 @@ export const TableLayout = () => {
                       </motion.div>
                     )}
                   </td>
-                </tr>
-              ))}
+                </tr> */}
+              {/* ))} */}
           </tbody>
         </table>
       </Formik>

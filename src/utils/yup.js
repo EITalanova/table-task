@@ -13,17 +13,19 @@ export const LoginSchema = Yup.object().shape({
     .required("Please enter your password")
     .trim()
     .min(6, "Your password is too short")
-    .max(128, "Password cannot be longer than 12 characters"),
+    .max(12, "Password cannot be longer than 12 characters"),
 });
 
 export const TableSchema = Yup.object().shape({
   name: Yup.string()
     .trim()
     .typeError("Must be string")
-    .max(150, "Username cannot be longer than 16 characters"),
+    .min(1, "Your name is too short")
+    .max(16, "Username cannot be longer than 16 characters"),
   email: Yup.string()
     .email("Invalid email")
     .min(6, "Your password is too short")
+    .max(30, "Email cannot be longer than 30 characters")
     .matches(
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       "Invalid email format"
@@ -37,6 +39,6 @@ export const TableSchema = Yup.object().shape({
     .matches(/^\+380\d{9}$/, "Error format"),
   address: Yup.string()
     .trim()
-    .min(15, "Username cannot bcters")
-    .max(150, "Username cannot be longer than 150 characters"),
+    .min(1, "Address cannot bcters")
+    .max(150, "Address cannot be longer than 150 characters"),
 });

@@ -3,7 +3,7 @@ import { fetchTableData, updateLine } from "./tableThunks";
 
 const initialState = {
   limit: 10,
-  offset: null,
+  offset: 0,
   tableData: [],
   isLoading: false,
   error: null,
@@ -40,11 +40,11 @@ const tableSlice = createSlice({
         state.isLoading = false;
         state.error = null;
 
-        const updatedLineIndex = state.tableData.findIndex(
+        const updatedLineIndex = state.tableData.results.findIndex(
           (line) => line.id === payload.id
         );
         if (updatedLineIndex !== -1) {
-          state.notes[updatedLineIndex] = payload;
+          state.tableData.results[updatedLineIndex] = payload;
         }
       })
       .addCase(updateLine.rejected, (state, { payload }) => {

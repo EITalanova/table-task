@@ -19,15 +19,13 @@ export const Pagination = ({ count }) => {
 
   const dispatch = useDispatch();
 
-  dispatch(setOffset(offset));
-
   useEffect(() => {
     dispatch(setOffset(offset));
-  }, [dispatch]);
+  }, [page]);
 
   const totalPages = Math.ceil(count / limit);
   const pages = [];
-  console.log(offset);
+
 
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
@@ -41,6 +39,7 @@ export const Pagination = ({ count }) => {
     } else {
       setPage(newPage);
     }
+    dispatch(setOffset(offset));
   };
 
   return (

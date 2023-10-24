@@ -62,7 +62,6 @@ export const LoginForm = () => {
   };
 
   useEffect(() => {
-    console.log("first");
     if (user) {
       return <Navigate to="/table" />;
     }
@@ -124,7 +123,7 @@ export const LoginForm = () => {
               </div>
             )}
 
-            <button className={style.logFormLinkBtn} type="submit">
+            <button className={style.logFormLinkBtn} type="submit" onSubmit={handleSubmit}>
               Login
             </button>
           </Form>

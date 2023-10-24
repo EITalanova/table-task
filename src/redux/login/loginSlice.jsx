@@ -1,10 +1,10 @@
-import Notiflix from 'notiflix';
+import Notiflix from "notiflix";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: null,
+  user: [],
   error: null,
-  users: [{ id: 1, username: "testuser", password: "testpassword123" }],
+  users: [{ id: 1, login: "testuser", password: "testpassword123" }],
 };
 
 const loginSlice = createSlice({
@@ -12,19 +12,21 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     loginUser: (state, action) => {
-      const { username, password } = action.payload;
+      const { login, password } = action.payload;
+      console.log(login);
+      console.log(password);
+      console.log(state.user);
       const matchingUser = state.users.find(
-        (user) => user.username === username && user.password === password
+        (user) => user.login === login && user.password === password
       );
-
-     if (matchingUser) {
-        // Вместо state.user = matchingUser; используйте Object.assign или spread оператор для обновления state
-        state = { ...state, user: matchingUser, error: null };
-        console.log(state.user);
+      console.log(matchingUser);
+      if (matchingUser) {
+        state.user = matchingUser;
+        state.error = null;
       } else {
-        state = { ...state, user: null };
-        // Notiflix.Notify.failure('Login or password does not exist 🥲 Try again');
+        state.user = null;
       }
+      console.log(state.user);
     },
   },
 });
