@@ -24,6 +24,7 @@
 }
 
 .table th {
+  position: relative;
   background-color: var(--accentGreen);
   color: var(--btnWhite);
 }
@@ -61,4 +62,34 @@ button svg {
 .table-edit-buttons {
   display: flex;
   justify-content: center;
+}
+
+.messageError {
+  /* position: absolute;
+    bottom: -19px; */
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  font-size: 8px;
+  font-weight: 400;
+  line-height: calc(18 / 12);
+  letter-spacing: 0.12px;
+  color: #d80027;
+}
+
+.sorted {
+  text-shadow: 3px 3px 6px rgba(244, 237, 237, 0.3);
+}
+
+th svg {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+  fill: white;
+  transition: all 0.3s ease;
+}
+
+th svg:hover {
+  fill: rgb(34, 233, 16);
+  transition: all 0.3s ease;
 }

@@ -17,12 +17,12 @@ const loginSlice = createSlice({
         (user) => user.username === username && user.password === password
       );
 
-      if (matchingUser) {
-        state.user = matchingUser;
+     if (matchingUser) {
+        // Вместо state.user = matchingUser; используйте Object.assign или spread оператор для обновления state
+        state = { ...state, user: matchingUser, error: null };
         console.log(state.user);
-        state.error = null;
       } else {
-        state.user = null;
+        state = { ...state, user: null };
         // Notiflix.Notify.failure('Login or password does not exist 🥲 Try again');
       }
     },

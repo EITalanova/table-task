@@ -22,7 +22,7 @@ function App() {
           element={
             // <PublicRoute>
               <Login />
-            // </PublicRoute>
+            //  </PublicRoute>
           }
         />
 
@@ -31,7 +31,7 @@ function App() {
           element={
             // <PrivateRoute>
               <Table />
-            // </PrivateRoute> 
+            //  </PrivateRoute> 
           }
         />
       </Route>

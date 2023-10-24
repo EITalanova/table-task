@@ -28,6 +28,7 @@ const InputField = ({ name, placeholder, type }) => {
         type={type}
         name={name}
         placeholder={placeholder}
+        
       />
       {touched[name] && error && (
         <div className={style.messageError}>
@@ -110,7 +111,6 @@ export const LoginForm = () => {
               placeholder="Password"
             />
 
-            
             <button
               className={style.logFormEye}
               onClick={changePasswordVisibility}
@@ -123,7 +123,7 @@ export const LoginForm = () => {
                 <span>{error}</span>
               </div>
             )}
-            
+
             <button className={style.logFormLinkBtn} type="submit">
               Login
             </button>
