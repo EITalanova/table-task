@@ -1,46 +1,31 @@
-@import '../../main.scss';
-
-.pagination {
-    display: flex;
-    align-items: center;
-    background: #fafafa;
-    box-shadow: 0px 4px 4px rgba(135, 135, 135, 0.2);
-    border-radius: 26px;
-    padding: 10px;
-    margin-bottom: 100px;
-    margin-top: 50px;
-    cursor: pointer;
+.paginationBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1px;
 }
 
-.pageDigit {
-    font-family: 'Poppins';
-    font-weight: 500;
-    font-size: 12px;
-    padding-right: 15px;
-    padding-left: 15px;
-    line-height: 18px;
-    display: flex;
-    text-align: center;
-
-    color: #656565;
+.paginationBox button {
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  border: 3px solid var(--bcgGreen);
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background-color 200ms ease-in;
 }
 
-.active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #ebf3d4;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    text-align: center;
+.paginationBox button:hover {
+  background-color: var(--bcgGreen);
 }
 
-.arrowBtn {
-    margin-right: 20px;
-    margin-left: 20px;
-    color: #a9a9a9;
-    display: block;
-    background-color: transparent;
-    border: none;
+.disabled {
+  border: none;
+  background-color: rgba(128, 128, 128, 0.2);
+  cursor: auto;
+}
+
+.current {
+  background-color: var(--accentGreen);
+  color: white;
 }

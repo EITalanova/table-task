@@ -4,6 +4,9 @@ import { selectTableData } from "../../redux/table/tableSelector";
 import { fetchTableData } from "../../redux/table/tableThunks";
 import { updateLine } from "../../redux/table/tableThunks";
 import { motion } from "framer-motion";
+import { Pagination } from "../Pagination/Pagination";
+import { setOffset } from "../../redux/table/tableSlice";
+import { selectOffset } from "../../redux/table/tableSelector";
 
 import { ReactComponent as EditIcon } from "../../assets/svg/table/edit.svg";
 import { ReactComponent as SaveIcon } from "../../assets/svg/table/save.svg";
@@ -15,10 +18,14 @@ export const TableLayout = () => {
   const [editedData, setEditedData] = useState({});
 
   const table = useSelector(selectTableData);
+  const offset = useSelector(selectOffset);
   const dispatch = useDispatch();
+  const { count } = table;
+
+  
 
   useEffect(() => {
-    dispatch(fetchTableData(30));
+    dispatch(fetchTableData(offset));
   }, [dispatch]);
 
   const handleEditClick = (id) => {
@@ -43,7 +50,6 @@ export const TableLayout = () => {
   };
 
   const handleSaveLine = (id) => {
-    // Получите данные из editedData для обновления
     const updatedData = {
       id: id,
       ...table.results.find((item) => item.id === id),
@@ -59,7 +65,7 @@ export const TableLayout = () => {
   };
 
   return (
-    <>
+    <div className={style.tableBox}>
       <table className={style.table}>
         <thead>
           <tr>
@@ -94,7 +100,6 @@ export const TableLayout = () => {
                 <td>
                   {editMode[item.id] ? (
                     <motion.div
-                      className="box"
                       whileHover={{ scale: 1.1 }}
                       transition={{
                         type: "spring",
@@ -108,7 +113,6 @@ export const TableLayout = () => {
                     </motion.div>
                   ) : (
                     <motion.div
-                      className="box"
                       whileHover={{ scale: 1.1 }}
                       transition={{
                         type: "spring",
@@ -126,6 +130,8 @@ export const TableLayout = () => {
             ))}
         </tbody>
       </table>
-    </>
+
+      <Pagination count={count} />
+    </div>
   );
 };

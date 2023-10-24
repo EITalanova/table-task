@@ -1,3 +1,11 @@
+.tableBox {
+  display: flex;
+  gap: 50px;
+  flex-direction: column;
+  padding: 20px;
+  align-items: center;
+}
+
 .table {
   width: 85%;
   border-collapse: collapse;
@@ -45,17 +53,6 @@ td input {
   font-size: 11px;
   width: 100%;
 }
-
-/* .table button {
-  font-size: 10px;
-  background-color: var(--accentGreen);
-  color: var(--btnWhite);
-  padding: 3px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  margin: 3px;
-} */
 
 button svg {
   stroke: var(--accentGreen);

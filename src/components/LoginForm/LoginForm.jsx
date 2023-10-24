@@ -102,7 +102,7 @@ export const LoginForm = () => {
           initialValues={{ name: "", password: "" }}
           onSubmit={handleSubmit}
         >
-          <Form className={style.logFormBox} noValidate>
+          <Form className={style.logFormBox}>
             <InputField type="text" name="login" placeholder="Login" />
             <InputField
               type={passwordVisibility ? "text" : "password"}

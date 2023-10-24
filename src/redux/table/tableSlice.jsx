@@ -3,8 +3,7 @@ import { fetchTableData, updateLine } from "./tableThunks";
 
 const initialState = {
   limit: 10,
-  totalPages: null,
-  currentPage: 1,
+  offset: null,
   tableData: [],
   isLoading: false,
   error: null,
@@ -15,8 +14,8 @@ const tableSlice = createSlice({
   name: "tableData",
   initialState,
   reducers: {
-    increasePage: (state) => {
-      state.page += 1;
+    setOffset: (state, { payload }) => {
+      state.offset = payload;
     },
     setIsEditMode: (state, { payload }) => {
       state.isEditMode = payload;
@@ -46,9 +45,6 @@ const tableSlice = createSlice({
         );
         if (updatedLineIndex !== -1) {
           state.notes[updatedLineIndex] = payload;
-          // if (state.currentNote && state.currentNote.id === payload.id) {
-          //   state.currentNote = payload;
-          // }
         }
       })
       .addCase(updateLine.rejected, (state, { payload }) => {
@@ -57,4 +53,4 @@ const tableSlice = createSlice({
 });
 
 export const tableReducer = tableSlice.reducer;
-export const { increasePage } = tableSlice.actions;
+export const { setOffset } = tableSlice.actions;

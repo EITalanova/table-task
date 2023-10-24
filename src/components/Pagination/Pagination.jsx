@@ -1,36 +1,76 @@
-import { selectCurrentPage, selectLimit } from "../../redux/table/tableSelector";
+import {
+  selectCurrentPage,
+  selectLimit,
+} from "../../redux/table/tableSelector";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import { setOffset } from "../../redux/table/tableSlice";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+
+import { ReactComponent as LeftIcon } from "../../assets/svg/pagination/arrowLeft.svg";
+import { ReactComponent as RightIcon } from "../../assets/svg/pagination/arrowRight.svg";
+import style from "./Pagination.module.css";
 
 export const Pagination = ({ count }) => {
   const [page, setPage] = useState(1);
   const limit = useSelector(selectLimit);
+  const offset = limit * page - 10;
+
+  const dispatch = useDispatch();
+
+  dispatch(setOffset(offset));
+
+  useEffect(() => {
+    dispatch(setOffset(offset));
+  }, [dispatch]);
 
   const totalPages = Math.ceil(count / limit);
-  console.log(totalPages);
-
   const pages = [];
+  console.log(offset);
 
   for (let i = 1; i <= totalPages; i++) {
     pages.push(i);
   }
 
   const handleChangePage = (newPage) => {
-    if (newPage !== page) { // Перевірка, чи нова сторінка відрізняється від поточної
+    if (newPage === "left") {
+      setPage(page - 1);
+    } else if (newPage === "right") {
+      setPage(page + 1);
+    } else {
       setPage(newPage);
     }
   };
 
   return (
-    <div>
-      <button>Prev</button>
+    <div className={style.paginationBox}>
+      <button
+        id="left"
+        onClick={() => handleChangePage("left")}
+        disabled={page === 1}
+        className={page === 1 ? style.disabled : ""}
+      >
+        <LeftIcon />
+      </button>
       {pages.map((newPage) => (
-  <button key={newPage} onClick={() => handleChangePage(newPage)}>
-    {newPage}
-  </button>
-))}
+        <button
+          className={newPage === page ? style.current : ""}
+          key={newPage}
+          onClick={() => handleChangePage(newPage)}
+        >
+          {newPage}
+        </button>
+      ))}
 
-      <button>Next</button>
+      <button
+        id="right"
+        onClick={() => handleChangePage("right")}
+        disabled={totalPages <= page}
+        className={totalPages <= page ? style.disabled : ""}
+      >
+        <RightIcon />
+      </button>
     </div>
   );
 };

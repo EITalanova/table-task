@@ -1,5 +1,5 @@
 .logFormContainer {
-margin: 25px auto;
+  margin: 25px auto;
 
   display: flex;
   flex-direction: column;
@@ -42,10 +42,9 @@ margin: 25px auto;
   display: flex;
   position: relative;
 
-
   width: 100%;
   flex-direction: column;
-  gap: 30px;
+  gap: 35px;
 }
 
 .logFormField {
@@ -62,10 +61,10 @@ margin: 25px auto;
 }
 
 .logFormEye {
-    position: absolute;
-      top: 50%;
-      right: 0;
-      transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(-50%, -50%);
 }
 
 .logFormLinkBtn {
@@ -94,7 +93,7 @@ margin: 25px auto;
 
 .messageError {
   position: absolute;
-  bottom: -18px;
+  bottom: -19px;
   display: flex;
   gap: 4px;
   align-items: center;
@@ -108,7 +107,7 @@ margin: 25px auto;
 .messageSuccess {
   display: flex;
   position: absolute;
-  bottom: -18px;
+  bottom: -19px;
   gap: 4px;
   align-items: center;
   font-size: 12px;
@@ -118,8 +117,3 @@ margin: 25px auto;
   color: rgba(60, 191, 97, 1);
 }
 
-.log {
-  position: relative;
-  /* background-color: red;
-  width: 10px; */
-}
