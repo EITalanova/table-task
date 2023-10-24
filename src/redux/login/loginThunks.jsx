@@ -1,14 +1,32 @@
-// import axios from "axios";
-// import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import Notiflix from "notiflix";
 
-// export const fetchTableData = createAsyncThunk(
-//   "table/tableData",
-//   async (_, thunkAPI) => {
-//     try {
-//       const res = await axios.get("http://146.190.118.121/api/table/");
-//       return { data: res.data };
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
+export const setAuthHeader = token => {
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+
+export const clearAuthHeader = () => {
+  axios.defaults.headers.common.Authorization = '';
+};
+
+export const thunkUser = createAsyncThunk(
+  "login/loginUser",
+
+  async ({ rejectWithValue, ...userData }) => {
+    try {
+      const {
+        data: { user, token },
+      } = await axios.post(
+        `https://technical-task-api.icapgroupgmbh.com/api/login/`,
+        userData
+      );
+
+      setAuthHeader(token);
+      return { user, token };
+    } catch (error) {
+      Notiflix.failure("Incorect email or password");
+      return rejectWithValue(error.message);
+    }
+  }
+);

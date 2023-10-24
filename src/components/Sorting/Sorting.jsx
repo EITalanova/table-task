@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
-
-import { Formik, Field, Form, useFormikContext } from "formik";
+import React from "react";
 
 import { ReactComponent as TopIcon } from "../../assets/svg/table/top.svg";
 import { ReactComponent as BottomIcon } from "../../assets/svg/table/bottom.svg";
 
 import style from "./Sorting.module.css";
-
 
 export const Sorting = ({ columns, sortBy, sortOrder, handleSort }) => (
   <thead>

@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 export const LoginSchema = Yup.object().shape({
-  login: Yup.string()
+  name: Yup.string()
     .required("Please enter your name")
     .trim()
     .typeError("Must be string")
@@ -13,7 +13,7 @@ export const LoginSchema = Yup.object().shape({
     .required("Please enter your password")
     .trim()
     .min(6, "Your password is too short")
-    .max(12, "Password cannot be longer than 12 characters"),
+    .max(20, "Password cannot be longer than 20 characters"),
 });
 
 export const TableSchema = Yup.object().shape({

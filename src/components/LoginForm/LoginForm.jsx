@@ -1,9 +1,8 @@
-import { selectError, selectUser } from "../../redux/login/loginSelector";
+import { selectUser } from "../../redux/login/loginSelector";
+import { useEffect } from "react";
 import { Formik, Field, Form, useFormikContext } from "formik";
 import { LoginSchema } from "../../utils/yup";
-import { loginUser } from "../../redux/login/loginSlice";
-import { Navigate } from "react-router-dom";
-import Notiflix from "notiflix";
+import { thunkUser } from "../../redux/login/loginThunks";
 import { motion } from "framer-motion";
 
 import { ReactComponent as ErrorIcon } from "../../assets/svg/login/validationError.svg";
@@ -12,10 +11,10 @@ import { ReactComponent as VisibleIcon } from "../../assets/svg/login/visible.sv
 import { ReactComponent as InvisibleIcon } from "../../assets/svg/login/invisible.svg";
 import style from "./LoginForm.module.css";
 import { useState } from "react";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectTableData } from "../../redux/table/tableSelector";
-import { fetchTableData } from "../../redux/table/tableThunks";
+// import { selectUser } from "../../redux/login/loginSelector";
+import { useNavigate } from 'react-router-dom';
 
 const InputField = ({ name, placeholder, type }) => {
   const { errors, touched } = useFormikContext();
@@ -28,7 +27,6 @@ const InputField = ({ name, placeholder, type }) => {
         type={type}
         name={name}
         placeholder={placeholder}
-        
       />
       {touched[name] && error && (
         <div className={style.messageError}>
@@ -48,30 +46,27 @@ const InputField = ({ name, placeholder, type }) => {
 };
 
 export const LoginForm = () => {
+
+  console.log(useSelector(selectUser));
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
-  const error = useSelector(selectError);
+  const [data, setData] = useState();
+  console.log(data);
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   const changePasswordVisibility = () => {
     setPasswordVisibility(!passwordVisibility);
   };
 
-  const handleSubmit = (values) => {
-    dispatch(loginUser(values));
+  const handleSubmit = (data) => {
+    const userData = {
+      username: data.name,
+      password: data.password,
+    };
+
+    dispatch(thunkUser(userData));
   };
-
-  useEffect(() => {
-    if (user) {
-      return <Navigate to="/table" />;
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (error) {
-      Notiflix.Notify.failure("Login or password does not exist 🥲 Try again");
-    }
-  }, [error]);
 
   return (
     <>
@@ -100,10 +95,13 @@ export const LoginForm = () => {
         <Formik
           validationSchema={LoginSchema}
           initialValues={{ name: "", password: "" }}
-          onSubmit={handleSubmit}
+          onSubmit={(data) => {
+            console.log(data);
+            handleSubmit(data); // Вызов функции handleSubmit, которая отправит данные на сервер.
+          }}
         >
           <Form className={style.logFormBox}>
-            <InputField type="text" name="login" placeholder="Login" />
+            <InputField type="text" name="name" placeholder="Login" />
             <InputField
               type={passwordVisibility ? "text" : "password"}
               name="password"
@@ -116,14 +114,12 @@ export const LoginForm = () => {
             >
               {passwordVisibility ? <VisibleIcon /> : <InvisibleIcon />}
             </button>
-            {error && (
-              <div className={style.messageError}>
-                <ErrorIcon />
-                <span>{error}</span>
-              </div>
-            )}
 
-            <button className={style.logFormLinkBtn} type="submit" onSubmit={handleSubmit}>
+            <button
+              className={style.logFormLinkBtn}
+              type="submit"
+              onClick={handleSubmit}
+            >
               Login
             </button>
           </Form>

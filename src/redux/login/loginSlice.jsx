@@ -1,33 +1,35 @@
-import Notiflix from "notiflix";
 import { createSlice } from "@reduxjs/toolkit";
+import { thunkUser } from "./loginThunks";
 
 const initialState = {
-  user: [],
+  username: null,
+  token: null,
   error: null,
-  users: [{ id: 1, login: "testuser", password: "testpassword123" }],
+  isLoading: false,
 };
 
 const loginSlice = createSlice({
   name: "login",
   initialState,
-  reducers: {
-    loginUser: (state, action) => {
-      const { login, password } = action.payload;
-      console.log(login);
-      console.log(password);
-      console.log(state.user);
-      const matchingUser = state.users.find(
-        (user) => user.login === login && user.password === password
-      );
-      console.log(matchingUser);
-      if (matchingUser) {
-        state.user = matchingUser;
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(thunkUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(thunkUser.rejected, (state, { payload }) => {
+        // console.log(payload);
+        // state.username = payload.user;
+        // state.token = payload.token;
+        state.isLoading = false;
         state.error = null;
-      } else {
-        state.user = null;
-      }
-      console.log(state.user);
-    },
+        
+      })
+      .addCase(thunkUser.fulfilled, (state, { payload }) => {
+        state.username = payload; 
+        state.isLoading = false;
+        state.error = null;
+      });
   },
 });
 

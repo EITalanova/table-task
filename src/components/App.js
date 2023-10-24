@@ -4,7 +4,6 @@ import { PrivateRoute } from "../hoc/PrivateRoute";
 import { PublicRoute } from "../hoc/PublicRoute";
 import Notiflix from "notiflix";
 
-// import { PrivateRoute } from "../hoc/PrivateRoute";
 
 import { Layout } from "./Layout/Layout";
 
@@ -20,18 +19,18 @@ function App() {
         <Route
           index
           element={
-            // <PublicRoute>
+             <PublicRoute>
               <Login />
-            // </PublicRoute>
+            </PublicRoute>
           }
         />
 
         <Route
           path="/table"
           element={
-            // <PrivateRoute>
+            <PrivateRoute>
               <Table />
-            // </PrivateRoute> 
+             </PrivateRoute> 
           }
         />
       </Route>

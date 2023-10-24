@@ -13,32 +13,7 @@ import { TableSchema, LoginSchema } from "../../utils/yup";
 import { Sorting } from "../Sorting/Sorting";
 import { TableRow } from "../TableRow/TableRow";
 
-import { ReactComponent as EditIcon } from "../../assets/svg/table/edit.svg";
-import { ReactComponent as SaveIcon } from "../../assets/svg/table/save.svg";
-import { ReactComponent as TopIcon } from "../../assets/svg/table/top.svg";
-import { ReactComponent as BottomIcon } from "../../assets/svg/table/bottom.svg";
-
 import style from "./TableLayout.module.css";
-
-// const InputField = ({ name, value, onChange }) => {
-//   const { errors, touched } = useFormikContext();
-//   const error = touched[name] && errors[name];
-
-//   return (
-//     <>
-//       <Field
-//         className={style.logFormField}
-//         type="text"
-//         name={name}
-//         value={value}
-//         onChange={onChange}
-//       />
-//       {touched[name] && error && (
-//           <span>{error}</span>
-//       )}
-//     </>
-//   );
-// };
 
 export const TableLayout = () => {
   const [sortBy, setSortBy] = useState(""); // Имя столбца для сортировки
@@ -46,16 +21,13 @@ export const TableLayout = () => {
 
   const handleSort = (columnName) => {
     if (sortBy === columnName) {
-      // Изменение порядка сортировки при повторном нажатии на тот же столбец
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
-      // Сортировка нового столбца в порядке возрастания
       setSortBy(columnName);
       setSortOrder("asc");
     }
   };
 
-  // Функция для сортировки данных
   const sortTableData = () => {
     const sortedData = [...table.results];
     sortedData.sort((a, b) => {
@@ -79,7 +51,6 @@ export const TableLayout = () => {
   useEffect(() => {
     dispatch(fetchTableData(offset));
   }, [offset]);
-  console.log(table);
 
   const handleEditClick = (id) => {
     setEditMode((prevMode) => {
@@ -89,13 +60,6 @@ export const TableLayout = () => {
       };
     });
   };
-
-  // const handleSaveClick = (id) => {
-  //   setEditMode((prevMode) => ({
-  //     ...prevMode,
-  //     [id]: false,
-  //   }));
-  // };
 
   const handleInputChange = (id, name, value) => {
     setEditedData((prevData) => ({
@@ -134,8 +98,7 @@ export const TableLayout = () => {
   ];
 
   return (
-    <div className={style.tableBox}>
-      <Formik
+    <Formik
         validationSchema={TableSchema}
         initialValues={{
           name: "",
@@ -146,35 +109,21 @@ export const TableLayout = () => {
         }}
         onSubmit={() => console.log("first")}
       >
+    <div className={style.tableBox}>
+      
         <table className={style.table}>
+          <Sorting
+            columns={columns}
+            sortBy={sortBy}
+            sortOrder={sortOrder}
+            handleSort={handleSort}
+          />
 
-          
-                    <Sorting columns={columns} sortBy={sortBy} sortOrder={sortOrder} handleSort={handleSort} />
-
-
-          {/* <thead>
-            {columns.map((column) => (
-              <th
-                key={column.key}
-                onClick={() => handleSort(column.key)}
-                className={sortBy === column.key ? style.sorted : ""}
-              >
-                {column.title}
-                {sortBy === column.key && sortOrder === "asc" ? (
-                  <TopIcon />
-                ) : (
-                  <BottomIcon />
-                )}
-              </th>
-            ))}
-          </thead> */}
           <tbody>
             {table &&
               table.results &&
               sortTableData().map((item) => (
-
-
-                 <TableRow
+                <TableRow
                   key={item.id}
                   item={item}
                   editMode={editMode}
@@ -184,61 +133,11 @@ export const TableLayout = () => {
                   handleSaveLine={handleSaveLine}
                 />
               ))}
-
-                {/* <tr key={item.id}>
-                  {Object.keys(item).map((name) => (
-                    <td key={name}>
-                      {editMode[item.id] ? (
-                        <Form>
-                          <InputField
-                            name={name}
-                            value={editedData[name]?.[item.id] || item[name]}
-                            onChange={(e) =>
-                              handleInputChange(item.id, name, e.target.value)
-                            }
-                          />
-                        </Form>
-                      ) : (
-                        editedData[name]?.[item.id] || item[name]
-                      )}
-                    </td>
-                  ))}
-
-                  <td>
-                    {editMode[item.id] ? (
-                      <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 400,
-                          damping: 10,
-                        }}
-                      >
-                        <button onClick={() => handleSaveLine(item.id)}>
-                          <SaveIcon />
-                        </button>
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 400,
-                          damping: 10,
-                        }}
-                      >
-                        <button onClick={() => handleEditClick(item.id)}>
-                          <EditIcon />
-                        </button>
-                      </motion.div>
-                    )}
-                  </td>
-                </tr> */}
-              {/* ))} */}
           </tbody>
         </table>
-      </Formik>
+      
       <Pagination count={count} />
-    </div>
+      </div>
+      </Formik>
   );
 };

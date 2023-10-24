@@ -19,6 +19,7 @@ import { loginReducer } from "./login/loginSlice";
 const loginPersistConfig = {
   key: "login",
   storage,
+  whitelist: ['token'],
 };
 
 const tablePersistConfig = {
