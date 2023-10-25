@@ -16,8 +16,8 @@ import { TableRow } from "../TableRow/TableRow";
 import style from "./TableLayout.module.css";
 
 export const TableLayout = () => {
-  const [sortBy, setSortBy] = useState(""); // Имя столбца для сортировки
-  const [sortOrder, setSortOrder] = useState("asc"); // Порядок сортировки (asc или desc)
+  const [sortBy, setSortBy] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc"); 
 
   const handleSort = (columnName) => {
     if (sortBy === columnName) {

@@ -1,5 +1,4 @@
 import { selectUser } from "../../redux/login/loginSelector";
-import { useEffect } from "react";
 import { Formik, Field, Form, useFormikContext } from "formik";
 import { LoginSchema } from "../../utils/yup";
 import { thunkUser } from "../../redux/login/loginThunks";
@@ -13,7 +12,6 @@ import style from "./LoginForm.module.css";
 import { useState } from "react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { selectUser } from "../../redux/login/loginSelector";
 import { useNavigate } from 'react-router-dom';
 
 const InputField = ({ name, placeholder, type }) => {
@@ -52,7 +50,6 @@ export const LoginForm = () => {
 
   const dispatch = useDispatch();
   const [data, setData] = useState();
-  console.log(data);
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   const changePasswordVisibility = () => {
@@ -97,7 +94,7 @@ export const LoginForm = () => {
           initialValues={{ name: "", password: "" }}
           onSubmit={(data) => {
             console.log(data);
-            handleSubmit(data); // Вызов функции handleSubmit, которая отправит данные на сервер.
+            handleSubmit(data);
           }}
         >
           <Form className={style.logFormBox}>

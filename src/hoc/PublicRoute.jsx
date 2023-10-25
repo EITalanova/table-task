@@ -5,7 +5,6 @@ import { Navigate } from "react-router-dom";
 
 export const PublicRoute = ({ children }) => {
   const isLoggedIn = useSelector(selectIslogin);
-  const dispatch = useDispatch();
 
   if (isLoggedIn) {
     return <Navigate to="/" />;

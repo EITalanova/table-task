@@ -7,19 +7,21 @@ import style from "./Sorting.module.css";
 
 export const Sorting = ({ columns, sortBy, sortOrder, handleSort }) => (
   <thead>
-    {columns.map((column) => (
-      <th
-        key={column.key}
-        onClick={() => handleSort(column.key)}
-        className={sortBy === column.key ? style.sorted : ""}
-      >
-        {column.title}
-        {sortBy === column.key && sortOrder === "asc" ? (
-          <TopIcon />
-        ) : (
-          <BottomIcon />
-        )}
-      </th>
-    ))}
+    <tr>
+      {columns.map((column) => (
+        <th
+          key={column.key}
+          onClick={() => handleSort(column.key)}
+          className={sortBy === column.key ? style.sorted : ""}
+        >
+          {column.title}
+          {sortBy === column.key && sortOrder === "asc" ? (
+            <TopIcon />
+          ) : (
+            <BottomIcon />
+          )}
+        </th>
+      ))}
+    </tr>
   </thead>
 );

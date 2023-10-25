@@ -18,9 +18,9 @@ const loginSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(thunkUser.rejected, (state, { payload }) => {
-        // console.log(payload);
-        // state.username = payload.user;
-        // state.token = payload.token;
+        console.log(payload);
+        state.username = payload.user;
+        state.token = payload.token;
         state.isLoading = false;
         state.error = null;
         
